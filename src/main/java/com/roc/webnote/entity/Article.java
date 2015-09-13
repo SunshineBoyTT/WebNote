@@ -10,12 +10,20 @@ import java.util.List;
  */
 public class Article {
     private String       code;
+    private String       userCode;
     private String       title;
     private String       category;
     private List<String> tags;
     private String       content;
     private Long         createTime;
     private String       tagListStr;
+
+    public Article() {
+//        this.title = "";
+//        this.category = "";
+//        this.content = "";
+        this.createTime = System.currentTimeMillis();
+    }
 
 
     public String getCode() {
@@ -79,5 +87,13 @@ public class Article {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getUserCode() {
+        return userCode;
+    }
+
+    public void setUserCode(String userCode) {
+        this.userCode = userCode;
     }
 }

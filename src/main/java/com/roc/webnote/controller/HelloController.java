@@ -28,26 +28,7 @@ public class HelloController {
         return "index";
     }
 
-    @RequestMapping(value = "imgupload")
-    @ResponseBody
-    public String imgUpload(@RequestBody String body) throws IllegalStateException, IOException {
-        body = URLDecoder.decode(body, "UTF-8").substring(27);
-        logger.info("The request body is :{}", body);
-        System.out.println(body);
 
-
-        UUID uuid = UUID.randomUUID();
-
-        BASE64Decoder decoder      = new BASE64Decoder();
-        String        fileName     = imgFolder + uuid + ".png";
-        byte[]        decoderBytes = decoder.decodeBuffer(body);
-        QiNiuTools.upload(decoderBytes, fileName);
-
-
-//        FileOutputStream write = new FileOutputStream(new File(fileName));
-//        write.write(decoderBytes);
-        return uuid.toString();
-    }
 
     @RequestMapping(value = "editor", method = RequestMethod.GET)
     public String editorRouter() {
@@ -66,5 +47,5 @@ public class HelloController {
         return "OK";
     }
 
-    
+
 }

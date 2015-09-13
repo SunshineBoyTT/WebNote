@@ -19,13 +19,17 @@ public class MyBatisConnectionFactory {
      * @return
      * @throws IOException
      */
-    public static SqlSessionFactory getSqlSessionFactory() throws IOException {
+    public static SqlSessionFactory getSqlSessionFactory() {
         if (sqlSessionFactory == null) {
             synchronized (MyBatisConnectionFactory.class) {
                 if (sqlSessionFactory == null) {
                     String resource = "mybatis-config.xml";
-                    InputStream inputStream = Resources
-                            .getResourceAsStream(resource);
+                    InputStream inputStream = null;
+                    try {
+                        inputStream = Resources.getResourceAsStream(resource);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     sqlSessionFactory = new SqlSessionFactoryBuilder()
                             .build(inputStream);
                 }

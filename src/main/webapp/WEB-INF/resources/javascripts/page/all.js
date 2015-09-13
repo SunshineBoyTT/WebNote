@@ -81,8 +81,7 @@ document.querySelector('#my-editormd').addEventListener('paste', function (e) {
 
             var data = this.result;
             console.log(data);
-            //$.post('/imgupload', data);
-            $.post('/imgupload', {body: data}, function (text, status) {
+            $.post('/picture', {body: data}, function (text, status) {
                 //alert(text);
                 setTimeout(function () {
                     $('.img-new').append('<img src="/images/' + text + '.png"/>');
