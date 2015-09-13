@@ -20,6 +20,8 @@ public class AuthenticationFilter extends OncePerRequestFilter {
         String uri = request.getRequestURI();
         if (!uri.startsWith("/resources/")) {
             System.out.println("Test Filter,URI: " + uri);
+        } else {
+            response.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
         }
         filterChain.doFilter(request, response);
     }

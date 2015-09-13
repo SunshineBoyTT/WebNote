@@ -11,7 +11,7 @@ import com.qiniu.util.Auth;
 public class QiNiuTools {
     private static String ACCESS_KEY = "qSyNG9128rk134ljUe0cTzNjVelUujUaB-yw22jo";
     private static String SECRET_KEY = "Wv7EDU2FZn6T1KFkVaYKIIY_6I1W2lgzQ7IwaiYV";
-    static Auth auth = Auth.create(ACCESS_KEY, SECRET_KEY);
+    static         Auth   auth       = Auth.create(ACCESS_KEY, SECRET_KEY);
 
     static UploadManager uploadManager = new UploadManager();
 
@@ -34,9 +34,9 @@ public class QiNiuTools {
 }
 
 class MyRet {
-    public long fsize;
+    public long   fsize;
     public String key;
     public String hash;
-    public int width;
-    public int height;
+    public int    width;
+    public int    height;
 }
