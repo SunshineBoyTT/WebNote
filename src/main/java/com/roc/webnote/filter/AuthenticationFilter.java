@@ -21,7 +21,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
         if (!uri.startsWith("/resources/")) {
             System.out.println("Test Filter,URI: " + uri);
         } else {
-            response.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
+            response.setHeader("Cache-control", "max-age=[72000]");
         }
         filterChain.doFilter(request, response);
     }
