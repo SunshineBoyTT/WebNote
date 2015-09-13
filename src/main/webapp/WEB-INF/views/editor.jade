@@ -1,0 +1,28 @@
+extends layout
+block content
+    .header
+        h1 书写, 第237话
+    .container
+        .row
+            .col-xs-12
+                .form-group
+                    label 标题
+                    input.form-control.title(placeholder="请输入标题...")
+                .form-group
+                    label 分类/目录
+                    select.form-control.category(style="height: 38px;")
+                        option 1
+                        option 2
+                        option 3
+                .editormd#my-editormd
+                    script(type="text/markdown")
+                .form-group
+                    label 标签
+                    #largeTags
+                .form-group
+                    button.btn.btn-info.btn-save Save
+
+
+
+
+
