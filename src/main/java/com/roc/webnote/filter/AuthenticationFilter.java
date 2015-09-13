@@ -1,5 +1,7 @@
 package com.roc.webnote.filter;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -13,14 +15,17 @@ import java.io.IOException;
  */
 public class AuthenticationFilter extends OncePerRequestFilter {
 
+    private static final Logger logger = LoggerFactory.getLogger(AuthenticationFilter.class);
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         // TODO 根据 URL 和 Cookie 判断请求是否合法
         // TODO 第一期只控制登录状态:未登录跳转到登录
         String uri = request.getRequestURI();
         if (!uri.startsWith("/resources/")) {
-            System.out.println("Test Filter,URI: " + uri);
+            logger.info("Test Filter,URI: {}", uri);
         } else {
+            // TODO 静态文件设置缓存
             response.setHeader("Cache-control", "max-age=[72000]");
         }
         filterChain.doFilter(request, response);

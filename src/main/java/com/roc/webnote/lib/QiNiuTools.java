@@ -22,12 +22,12 @@ public class QiNiuTools {
 
     public static void upload(byte[] b, String key) {
         try {
-            Response res = uploadManager.put(b, key, getUpToken());
-            MyRet ret = res.jsonToObject(MyRet.class);
-            System.out.println(res);
+            uploadManager.put(b, key, getUpToken());
+//            MyRet ret = res.jsonToObject(MyRet.class);
+//            System.out.println(res);
         } catch (QiniuException e) {
             Response r = e.response;
-            // 请求失败时简单状态信息
+            // TODO 请求失败时简单状态信息
         }
     }
 
