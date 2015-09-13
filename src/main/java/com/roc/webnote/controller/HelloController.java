@@ -9,15 +9,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import sun.misc.BASE64Decoder;
 
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.RandomAccessFile;
 import java.net.URLDecoder;
-import java.nio.MappedByteBuffer;
-import java.nio.channels.FileChannel;
 import java.util.UUID;
 
 @Controller
@@ -73,58 +66,5 @@ public class HelloController {
         return "OK";
     }
 
-    @RequestMapping(value = "images/{uuid}.png")
-    public void downloadImage(@PathVariable String uuid, HttpServletResponse response) throws IOException {
-
-        String img = imgFolder + uuid + ".png";
-        //1.设置文件ContentType类型，这样设置，会自动判断下载文件类型
-        response.setContentType("image/png");
-
-        ServletOutputStream out;
-
-//        File file = new File(img);
-
-        try {
-
-            out = response.getOutputStream();
-
-
-            byte[] buffer = toByteArray(img);
-            out.write(buffer);
-            out.flush();
-            out.close();
-//            inputStream.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-//        out.w
-
-    }
-
-    public static byte[] toByteArray(String filename) throws IOException {
-
-        FileChannel fc = null;
-        try {
-            fc = new RandomAccessFile(filename, "r").getChannel();
-            MappedByteBuffer byteBuffer = fc.map(FileChannel.MapMode.READ_ONLY, 0,
-                                                 fc.size()).load();
-            System.out.println(byteBuffer.isLoaded());
-            byte[] result = new byte[(int) fc.size()];
-            if (byteBuffer.remaining() > 0) {
-                // System.out.println("remain");
-                byteBuffer.get(result, 0, byteBuffer.remaining());
-            }
-            return result;
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw e;
-        } finally {
-            try {
-                fc.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+    
 }
