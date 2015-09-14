@@ -19,9 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
-/**
- * Created by yp-tc-m-2795 on 15/9/13.
- */
+
 @RequestMapping("/article")
 @Controller
 public class ArticleController {
