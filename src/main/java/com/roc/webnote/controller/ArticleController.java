@@ -54,6 +54,7 @@ public class ArticleController {
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String articleList(@CookieValue(value = "userCode", required = false) String userCode, Model model) {
+        System.out.println(userCode);
         if (StringUtils.isEmpty(userCode)) {
             return "redirect:/";
         } else {

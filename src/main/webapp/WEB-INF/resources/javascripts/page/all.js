@@ -244,10 +244,10 @@ $('.logout').click(function () {
         url    : '/user/logins',
         type   : 'DELETE',
         success: function () {
-            $.cookie('userCode', '', {expires: -1}); // 删除 cookie
+            document.cookie = "userCode=;expires=-1;path=/" // 删除 cookie
             setTimeout(function () {
                 window.location.href = '/';
-            }, 100);
+            }, 200);
         }
     });
 });
