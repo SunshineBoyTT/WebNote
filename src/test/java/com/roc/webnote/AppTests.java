@@ -15,17 +15,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@WebAppConfiguration
-@ContextConfiguration("file:src/main/webapp/WEB-INF/mvc-dispatcher-servlet.xml")
+//@RunWith(SpringJUnit4ClassRunner.class)
+//@WebAppConfiguration
+//@ContextConfiguration("file:src/main/webapp/WEB-INF/mvc-dispatcher-servlet.xml")
 public class AppTests {
     private MockMvc mockMvc;
 
-    @SuppressWarnings("SpringJavaAutowiringInspection")
-    @Autowired
+//    @SuppressWarnings("SpringJavaAutowiringInspection")
+//    @Autowired
     protected WebApplicationContext wac;
 
-    @Before
+//    @Before
     public void setup() {
         this.mockMvc = webAppContextSetup(this.wac).build();
     }
@@ -35,5 +35,10 @@ public class AppTests {
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("hello"));
+    }
+
+    @Test
+    public void testOS() {
+        System.out.println(System.getProperty("os.name"));
     }
 }
