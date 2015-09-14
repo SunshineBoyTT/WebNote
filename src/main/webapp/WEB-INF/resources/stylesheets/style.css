@@ -19,7 +19,7 @@ input.tags-input.input-lg {
 }
 
 #my-editormd {
-    z-index: 1;
+    z-index: 9999;
 }
 
 /*----*/
