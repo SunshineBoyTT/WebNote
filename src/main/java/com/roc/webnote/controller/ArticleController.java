@@ -28,28 +28,30 @@ public class ArticleController {
     /**
      * TODO 添加Article,跳转至URL:/article/uuid
      *
-     * @param model
+     * @param userCode
      * @return
      */
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public String createArticle(@CookieValue("userUuid") String userUuid) {
-        UUID    uuid     = UUID.randomUUID();
-        Article article  = new Article();
-        String  userCode = userDao.getUserByUuid(userUuid).getCode();
+    @ResponseBody
+    public String createArticle(@CookieValue(value = "userCode", required = false) String userCode) {
+        if (StringUtils.isEmpty(userCode)) {
+            return "redirect:/";
+        } else {
+            UUID uuid = UUID.randomUUID();
+            Article article = new Article();
 
-        article.setCode(uuid.toString());
-        article.setUserCode(userCode);
+            article.setCode(uuid.toString());
+            article.setUserCode(userCode);
 
-        articleDao.initArticle(article);
-
-
-        return "redirect:/article/" + uuid;
+            articleDao.initArticle(article);
+            return uuid.toString();//JavaScript control the direct
+        }
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String articleList(@CookieValue(value = "userCode", required = false) String userCode, Model model) {
         if (StringUtils.isEmpty(userCode)) {
-            return "redirect:index";
+            return "redirect:/";
         } else {
             model.addAttribute("articles", articleDao.getArticles(userCode));
             return "articles";
@@ -58,7 +60,7 @@ public class ArticleController {
 
     @RequestMapping(value = "/{articleCode}", method = RequestMethod.GET)
     public String editArticle(@PathVariable("articleCode") String articleCode, Model model) {
-        model.addAttribute("article", articleDao.getArticles(articleCode));
+        model.addAttribute("article", articleDao.getArticle(articleCode));
         return "article";
     }
 

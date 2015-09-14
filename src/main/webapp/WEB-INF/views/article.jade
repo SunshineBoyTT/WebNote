@@ -7,7 +7,7 @@ block content
             .col-xs-12
                 .form-group
                     label 标题
-                    input.form-control.title(placeholder="请输入标题...")
+                    input.form-control.title(placeholder="请输入标题...",value="#{article.title}",data-code="#{article.code}")
                 .form-group
                     label 分类/目录
                     select.form-control.category(style="height: 38px;")
@@ -15,7 +15,8 @@ block content
                         option 2
                         option 3
                 .editormd#my-editormd
-                    script(type="text/markdown")
+                    textarea(style="display: none;") #{article.content}
+                    //script(type="text/markdown")
                 .form-group
                     label 标签
                     #largeTags

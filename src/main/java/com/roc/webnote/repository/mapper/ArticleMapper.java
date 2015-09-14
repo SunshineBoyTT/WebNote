@@ -20,7 +20,7 @@ public interface ArticleMapper {
     @Insert("INSERT INTO article (code,userCode,createTime) values (#{code}, #{userCode}, #{createTime})")
     void initArticle(Article article);
 
-    @Update("UPDATE article SET title = #{title}, category = #{category}, content = #{content}")
+    @Update("UPDATE article SET title = #{title}, category = #{category}, content = #{content} WHERE code = #{code}")
     void updateArticle(Article article);
 
 }

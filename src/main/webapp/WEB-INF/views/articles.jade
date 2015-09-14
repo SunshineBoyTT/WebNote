@@ -3,7 +3,15 @@ block content
     header
         h1 WebNote 2.0
         div 列表
-    hr
-    .list
-    each article, i in articles
-        li #{article.title}: #{i}
+    .container
+        .row
+            .col-xs-12
+                .list-group
+                each article, i in articles
+                    a.list-group-item(href="/article/#{article.code}")
+                        h4.list-group-item-heading #{article.title}
+                        p.list-group-item-text #{article.content}
+    .initArticle
+        a.btn.btn-info(href="#")
+            span.glyphicon.glyphicon-file
+            | 增加一个

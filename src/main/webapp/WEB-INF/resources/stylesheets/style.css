@@ -71,10 +71,16 @@ hr.cut-line {
     border-top: 1px solid #4062A3;
 }
 
-.show-all, .show-again {
+.show-all, .show-again, .initArticle {
     text-align: center;
     position: fixed;
-    bottom: 30px;
+    bottom: 70px;
+    width: 100%;
+}
+
+footer {
+    /*position: fixed;*/
+    /*bottom: 0px;*/
     width: 100%;
 }
 

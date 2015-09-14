@@ -13,7 +13,7 @@ public class UserDaoTest {
         UserDao userDao = new UserDao();
         User    user    = new User();
         user.setUserName("cshijiel");
-        user.setPassword("password");
+        user.setPassword("1234");
         user = userDao.getUser(user);
         System.out.println(user.getCode());
     }

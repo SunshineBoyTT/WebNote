@@ -107,17 +107,18 @@ $(function () {
 
 // 保存笔记
 $('.btn-save').click(function () {
-    var title      = $('.title').val();
-    var category   = $('.category').val();
-    var content    = myEditor.getMarkdown();
-    var tags       = $('.tag.label.btn-info.lg');
-    var tagListStr = "";
+    var articleCode = $('.title').data('code');
+    var title       = $('.title').val();
+    var category    = $('.category').val();
+    var content     = myEditor.getMarkdown();
+    var tags        = $('.tag.label.btn-info.lg');
+    var tagListStr  = "";
     tags.each(function () {
         tagListStr += "," + $(this).select('span').text().trim();
     });
-    tagListStr     = tagListStr.substr(1);
+    tagListStr      = tagListStr.substr(1);
     $.post(
-        '/article',
+        '/article/' + articleCode,
         {
             title     : title,
             category  : category,
@@ -133,52 +134,54 @@ $('.btn-save').click(function () {
 
 //代码飘落
 
-var c   = document.getElementById("codeFlow");
-var ctx = c.getContext("2d");
+var c = document.getElementById("codeFlow");
+if (c) {
+    var ctx = c.getContext("2d");
 
 //全屏
 //c.height = window.innerHeight;
-c.height = 400;
-c.width  = window.innerWidth;
+    c.height = 400;
+    c.width  = window.innerWidth;
 
 //文字
-var txts = "0123456789qwertyuiop[]';lkjhgfdsazxcvbnm,./-=!@#$%^&*()_+}|\{POIUYTREWQASDFGHJKL:\"?><MNBVCXZ`~";
+    var txts = "0123456789qwertyuiop[]';lkjhgfdsazxcvbnm,./-=!@#$%^&*()_+}|\{POIUYTREWQASDFGHJKL:\"?><MNBVCXZ`~";
 //转为数组
-txts = txts.split("");
+    txts = txts.split("");
 
-var font_size = 16;
-var columns   = c.width / font_size;
+    var font_size = 16;
+    var columns   = c.width / font_size;
 //用于计算输出文字时坐标，所以长度即为列数
-var drops = [];
+    var drops = [];
 //初始值
-for (var x = 0; x < columns; x++)
-    drops[x] = 1;
+    for (var x = 0; x < columns; x++)
+        drops[x] = 1;
 
 //输出文字
-function draw() {
-    //让背景逐渐由透明到不透明
-    ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-    ctx.fillRect(0, 0, c.width, c.height);
+    function draw() {
+        //让背景逐渐由透明到不透明
+        ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+        ctx.fillRect(0, 0, c.width, c.height);
 
-    ctx.fillStyle = "#0F0"; //文字颜色
-    ctx.font = font_size + "px arial";
-    //逐行输出文字
-    for (var i = 0; i < drops.length; i++) {
-        //随机取要输出的文字
-        var text = txts[Math.floor(Math.random() * txts.length)];
-        //输出文字，注意坐标的计算
-        ctx.fillText(text, i * font_size, drops[i] * font_size);
+        ctx.fillStyle = "#0F0"; //文字颜色
+        ctx.font = font_size + "px arial";
+        //逐行输出文字
+        for (var i = 0; i < drops.length; i++) {
+            //随机取要输出的文字
+            var text = txts[Math.floor(Math.random() * txts.length)];
+            //输出文字，注意坐标的计算
+            ctx.fillText(text, i * font_size, drops[i] * font_size);
 
-        //如果绘满一屏或随机数大于0.95（此数可自行调整，效果会不同）
-        if (drops[i] * font_size > c.height || Math.random() > 0.95)
-            drops[i] = 0;
+            //如果绘满一屏或随机数大于0.95（此数可自行调整，效果会不同）
+            if (drops[i] * font_size > c.height || Math.random() > 0.95)
+                drops[i] = 0;
 
-        //用于Y轴坐标增加
-        drops[i]++;
+            //用于Y轴坐标增加
+            drops[i]++;
+        }
     }
-}
 
-setInterval(draw, 33);
+    setInterval(draw, 33);
+}
 
 
 // 登录流程
@@ -220,6 +223,17 @@ $('form').submit(function () {
     });
 
     return false;
+});
+
+
+//增加/初始化笔记
+$('.initArticle').click(function () {
+    $.post(
+        '/article',
+        function (data, status) {
+            //alert("Data: " + data + "\nStatus: " + status);
+            window.location.href = '/article/' + data;
+        });
 });
 
 

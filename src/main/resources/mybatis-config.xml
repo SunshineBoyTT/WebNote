@@ -3,7 +3,8 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <!-- 数据库连接验证详细信息 -->
-    <properties resource="db.properties"/>
+    <!--<properties resource="db.properties"/>-->
+    <properties resource="db_local.properties"/>
 
 
     <!-- 事务管理和连接池的环境配置 -->
