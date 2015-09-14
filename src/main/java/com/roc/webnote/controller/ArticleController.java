@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -46,8 +47,8 @@ public class ArticleController {
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String articleList(@CookieValue("userCode") String userCode, Model model) {
-        if (userCode == null) {
+    public String articleList(@CookieValue(value = "userCode", required = false) String userCode, Model model) {
+        if (StringUtils.isEmpty(userCode)) {
             return "redirect:index";
         } else {
             model.addAttribute("articles", articleDao.getArticles(userCode));
