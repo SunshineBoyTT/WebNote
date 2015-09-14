@@ -30,7 +30,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
             request.setAttribute("user", userUuid);
         } else {
             // TODO 静态文件设置缓存
-            response.setHeader("Cache-control", "max-age=[72000]");
+            response.setHeader("Cache-control", "public, max-age=72000");
         }
         filterChain.doFilter(request, response);
     }
