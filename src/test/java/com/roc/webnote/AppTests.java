@@ -1,5 +1,6 @@
 package com.roc.webnote;
 
+import com.roc.webnote.controller.ArticleController;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,11 +22,11 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 public class AppTests {
     private MockMvc mockMvc;
 
-//    @SuppressWarnings("SpringJavaAutowiringInspection")
+    //    @SuppressWarnings("SpringJavaAutowiringInspection")
 //    @Autowired
     protected WebApplicationContext wac;
 
-//    @Before
+    //    @Before
     public void setup() {
         this.mockMvc = webAppContextSetup(this.wac).build();
     }

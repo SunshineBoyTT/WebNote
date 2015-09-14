@@ -11,6 +11,12 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.FileInputStream;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -70,6 +76,38 @@ public class ArticleController {
         article.setCode(articleCode);
         articleDao.updateArticle(article);
         return "OK";
+    }
+
+    /**
+     * 下载后hexo直接可用
+     *
+     * @param articleCode
+     * @return
+     */
+    @RequestMapping(value = "/download/{articleCode}", method = RequestMethod.GET)
+    public void downloadArticle(@PathVariable("articleCode") String articleCode, HttpServletResponse response) {
+        Article       article    = articleDao.getArticle(articleCode);
+        String        categories = "categories: 知识记录";
+        String        createTime = "date: " + getFormatDateTime(article.getCreateTime(), "yyyy-MM-dd HH:mm:ss");
+        StringBuilder builder    = new StringBuilder();
+        builder.append("title: " + article.getTitle() + "\n");
+        builder.append(createTime + "\n");
+        builder.append(categories + "\n");
+        builder.append("---\n\n");
+        builder.append(article.getContent());
+        System.out.println(builder);
+        response.setHeader("content-disposition", "attachment;filename=" + article.getTitle() + ".md");
+        try (OutputStream out = response.getOutputStream()) {
+            out.write(builder.toString().getBytes());//向客户端输出，实际是把数据存放在response中，然后web服务器再去response中读取
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static String getFormatDateTime(Long timestamp, String formatter) {
+        Date             date   = new Date(timestamp);
+        SimpleDateFormat format = new SimpleDateFormat(formatter);
+        return format.format(date);
     }
 
 

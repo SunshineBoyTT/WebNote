@@ -126,7 +126,8 @@ $('.btn-save').click(function () {
             tagListStr: tagListStr
         },
         function (data, status) {
-            alert("Data: " + data + "\nStatus: " + status);
+            //alert("Data: " + data + "\nStatus: " + status);
+            alert("保存成功!");
         });
     //return false;
 });
@@ -236,5 +237,10 @@ $('.initArticle').click(function () {
         });
 });
 
+
+//下载笔记
+$('.btn-download').click(function () {
+
+});
 
 

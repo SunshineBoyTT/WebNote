@@ -1,10 +1,28 @@
 extends layout
 block content
-    .header
-        h1 书写, 第237话
+    nav.navbar.navbar-default.navbar-fixed-top
+        .container
+            .navbar-header
+                a.navbar-brand(href="/") WebNote 2.0
+            .collapse.navbar-collapse
+                ul.nav.navbar-nav.navbar-right
+                    li.dropdown
+                        a.dropdown-toggle(href="#", data-toggle="dropdown", role="button", aria-haspopup="true", aria-expanded="false")
+                            | 个人信息
+                            span.caret
+                        ul.dropdown-menu
+                            li
+                                a(href="#") #{user.userName}
+                            li.divider(role="separator")
+                            li
+                                a(href="#")
+                                    span.glyphicon.glyphicon-log-out
+                                | 注销
     .container
         .row
-            .col-xs-12
+            .col-xs-12(style="padding-top: 55px;")
+                .header
+                    h1 书写, 第237话
                 .form-group
                     label 标题
                     input.form-control.title(placeholder="请输入标题...",value="#{article.title}",data-code="#{article.code}")
@@ -21,7 +39,15 @@ block content
                     label 标签
                     #largeTags
                 .form-group
-                    button.btn.btn-info.btn-save Save
+                    button.btn.btn-info.btn-save
+                        span.glyphicon.glyphicon-floppy-disk
+                        | Save
+                    a.btn.btn-success.btn-download(href="/article/download/#{article.code}",target="_blank")
+                        span.glyphicon.glyphicon-floppy-save
+                        | Download
+                    button.btn.btn-danger.btn-remove
+                        span.glyphicon.glyphicon-trash
+                        | Remove
 
 
 

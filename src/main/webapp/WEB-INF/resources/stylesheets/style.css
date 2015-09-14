@@ -78,6 +78,14 @@ hr.cut-line {
     width: 100%;
 }
 
+.form-group > .btn {
+    margin-right: 10px;
+}
+
+.form-group > .btn > span.glyphicon {
+    margin-right: 5px;
+}
+
 footer {
     /*position: fixed;*/
     /*bottom: 0px;*/
