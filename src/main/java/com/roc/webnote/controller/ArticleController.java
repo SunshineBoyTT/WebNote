@@ -95,7 +95,6 @@ public class ArticleController {
         builder.append(categories + "\n");
         builder.append("---\n\n");
         builder.append(article.getContent());
-        System.out.println(builder);
         response.setHeader("content-disposition", "attachment;filename=" + article.getTitle() + ".md");
         try (OutputStream out = response.getOutputStream()) {
             out.write(builder.toString().getBytes());//向客户端输出，实际是把数据存放在response中，然后web服务器再去response中读取
