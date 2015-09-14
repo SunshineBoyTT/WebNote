@@ -9,7 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * Created by yp-tc-m-2795 on 15/9/13.
@@ -40,11 +42,8 @@ public class UserController {
 
     @RequestMapping(value = "/logins", method = RequestMethod.DELETE)
     @ResponseBody
-    public String logout(HttpServletResponse response) {
-        Cookie cookie = new Cookie("userCode", "");
-        cookie.setMaxAge(0);
-
-        response.addCookie(cookie);
+    public String logout() {
+        // TODO 删除session信息,但是现在没有session信息
         return "OK";
     }
 }

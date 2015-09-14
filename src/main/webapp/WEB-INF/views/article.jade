@@ -12,12 +12,12 @@ block content
                             span.caret
                         ul.dropdown-menu
                             li
-                                a(href="#") #{user.userName}
+                                a(href="#") 用户名:#{user.userName}
                             li.divider(role="separator")
                             li
-                                a(href="#")
+                                a(href="#").logout
                                     span.glyphicon.glyphicon-log-out
-                                | 注销
+                                    | 注销
     .container
         .row
             .col-xs-12(style="padding-top: 55px;")

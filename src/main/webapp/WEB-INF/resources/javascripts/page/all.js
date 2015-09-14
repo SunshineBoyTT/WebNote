@@ -238,9 +238,18 @@ $('.initArticle').click(function () {
 });
 
 
-//下载笔记
-$('.btn-download').click(function () {
-
+// 注销
+$('.logout').click(function () {
+    $.ajax({
+        url    : '/user/logins',
+        type   : 'DELETE',
+        success: function () {
+            $.cookie('userCode', '', {expires: -1}); // 删除 cookie
+            setTimeout(function () {
+                window.location.href = '/';
+            }, 100);
+        }
+    });
 });
 
 
