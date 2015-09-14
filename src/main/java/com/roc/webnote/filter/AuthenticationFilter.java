@@ -44,9 +44,11 @@ public class AuthenticationFilter extends OncePerRequestFilter {
      * @return
      */
     private static String getValue(String key, Cookie[] cookies) {
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals(key)) {
-                return cookie.getValue();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals(key)) {
+                    return cookie.getValue();
+                }
             }
         }
         return null;
