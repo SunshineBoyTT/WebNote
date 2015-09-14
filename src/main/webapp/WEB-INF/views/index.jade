@@ -4,7 +4,8 @@ block content
     header
         h1 WebNote 2.0
         div 登录
-    .container
+    canvas#codeFlow
+    .container(style="margin-top: -300px;")
         .row
             .col-md-6.col-md-offset-3
                 .login-box
@@ -12,12 +13,12 @@ block content
                         .alert.alert-info
                             strong
                                 span.glyphicon.glyphicon-info-sign
-                            |  请输入用户名密码登录。
+                            | 请输入用户名密码登录。
                     form.form-horizontal
                         .form-group
                             label.col-sm-3.control-label 用户名：
                             .col-sm-9
-                                input.form-control(type="text",name="username")
+                                input.form-control(type="text",name="userName")
                         .form-group
                             label.col-sm-3.control-label 密码：
                             .col-sm-9
@@ -27,5 +28,3 @@ block content
                                 button.btn.btn-default(type="submit")
                                     span.glyphicon.glyphicon-log-in
                                     |    登录
-
-

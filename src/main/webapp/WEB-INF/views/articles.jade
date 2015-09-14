@@ -1,0 +1,9 @@
+extends layout
+block content
+    header
+        h1 WebNote 2.0
+        div 列表
+    hr
+    .list
+    each article, i in articles
+        li #{article.title}: #{i}

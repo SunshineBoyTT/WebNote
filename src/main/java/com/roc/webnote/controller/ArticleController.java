@@ -6,6 +6,7 @@ import com.roc.webnote.repository.mapper.UserMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +16,7 @@ import java.util.UUID;
  * Created by yp-tc-m-2795 on 15/9/13.
  */
 @RequestMapping("/article")
+@Controller
 public class ArticleController {
     private Logger logger = LoggerFactory.getLogger(ArticleController.class);
     @Autowired
@@ -28,7 +30,7 @@ public class ArticleController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @RequestMapping(value = "", method = RequestMethod.POST)
     public String createArticle(@CookieValue("userUuid") String userUuid) {
         UUID    uuid     = UUID.randomUUID();
         Article article  = new Article();
@@ -41,6 +43,16 @@ public class ArticleController {
 
 
         return "redirect:/article/" + uuid;
+    }
+
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public String articleList(@CookieValue("userCode") String userCode, Model model) {
+        if (userCode == null) {
+            return "redirect:index";
+        } else {
+            model.addAttribute("articles", articleDao.getArticles(userCode));
+            return "articles";
+        }
     }
 
     @RequestMapping(value = "/{articleCode}", method = RequestMethod.GET)

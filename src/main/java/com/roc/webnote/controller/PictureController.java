@@ -23,7 +23,7 @@ public class PictureController {
     private static final String imgFolder = "images/";
     private static       Logger logger    = LoggerFactory.getLogger(PictureController.class);
 
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @RequestMapping(value = "", method = RequestMethod.POST)
     @ResponseBody
     public String imgUpload(@RequestBody String body) throws IllegalStateException, IOException {
         body = URLDecoder.decode(body, "UTF-8").substring(27);

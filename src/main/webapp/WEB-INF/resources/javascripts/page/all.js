@@ -66,34 +66,36 @@ $(function () {
         }
     })
     ;
-})
-;
+});
 
+var myEditorMd = document.querySelector('#my-editormd');
+if (myEditorMd) {
+    myEditorMd.addEventListener('paste', function (e) {
+        // chrome
+        if (e.clipboardData && e.clipboardData.items[0].type.indexOf('image') > -1) {
+            var that   = this,
+                reader = new FileReader();
+            file       = e.clipboardData.items[0].getAsFile();
 
-document.querySelector('#my-editormd').addEventListener('paste', function (e) {
-    // chrome
-    if (e.clipboardData && e.clipboardData.items[0].type.indexOf('image') > -1) {
-        var that   = this,
-            reader = new FileReader();
-        file       = e.clipboardData.items[0].getAsFile();
+            reader.onload = function (e) {
 
-        reader.onload = function (e) {
+                var data = this.result;
+                console.log(data);
+                $.post('/picture', {body: data}, function (text, status) {
+                    //alert(text);
+                    setTimeout(function () {
+                        $('.img-new').append('<img src="/images/' + text + '.png"/>');
+                        myEditor.insertValue("![请输入图片标题...](http://7d9owd.com1.z0.glb.clouddn.com/images/" + text + ".png)\n");
+                        myEditor.focus();
+                    }, 200);
+                });
 
-            var data = this.result;
-            console.log(data);
-            $.post('/picture', {body: data}, function (text, status) {
-                //alert(text);
-                setTimeout(function () {
-                    $('.img-new').append('<img src="/images/' + text + '.png"/>');
-                    myEditor.insertValue("![请输入图片标题...](http://7d9owd.com1.z0.glb.clouddn.com/images/" + text + ".png)\n");
-                    myEditor.focus();
-                }, 200);
-            });
+            };
+            reader.readAsDataURL(file);
+        }
+    }, false);
+}
 
-        };
-        reader.readAsDataURL(file);
-    }
-}, false);
 
 $(function () {
     $("#largeTags").tags({
@@ -103,7 +105,7 @@ $(function () {
     });
 });
 
-
+// 保存笔记
 $('.btn-save').click(function () {
     var title      = $('.title').val();
     var category   = $('.category').val();
@@ -125,9 +127,99 @@ $('.btn-save').click(function () {
         function (data, status) {
             alert("Data: " + data + "\nStatus: " + status);
         });
-
-
     //return false;
+});
+
+
+//代码飘落
+
+var c   = document.getElementById("codeFlow");
+var ctx = c.getContext("2d");
+
+//全屏
+//c.height = window.innerHeight;
+c.height = 400;
+c.width  = window.innerWidth;
+
+//文字
+var txts = "0123456789qwertyuiop[]';lkjhgfdsazxcvbnm,./-=!@#$%^&*()_+}|\{POIUYTREWQASDFGHJKL:\"?><MNBVCXZ`~";
+//转为数组
+txts = txts.split("");
+
+var font_size = 16;
+var columns   = c.width / font_size;
+//用于计算输出文字时坐标，所以长度即为列数
+var drops = [];
+//初始值
+for (var x = 0; x < columns; x++)
+    drops[x] = 1;
+
+//输出文字
+function draw() {
+    //让背景逐渐由透明到不透明
+    ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+    ctx.fillRect(0, 0, c.width, c.height);
+
+    ctx.fillStyle = "#0F0"; //文字颜色
+    ctx.font = font_size + "px arial";
+    //逐行输出文字
+    for (var i = 0; i < drops.length; i++) {
+        //随机取要输出的文字
+        var text = txts[Math.floor(Math.random() * txts.length)];
+        //输出文字，注意坐标的计算
+        ctx.fillText(text, i * font_size, drops[i] * font_size);
+
+        //如果绘满一屏或随机数大于0.95（此数可自行调整，效果会不同）
+        if (drops[i] * font_size > c.height || Math.random() > 0.95)
+            drops[i] = 0;
+
+        //用于Y轴坐标增加
+        drops[i]++;
+    }
+}
+
+setInterval(draw, 33);
+
+
+// 登录流程
+$('form').submit(function () {
+    var query = $(this).serialize();
+    //query     = query.replace(/\+/g, " ");
+    //query     = query.replace(/=/g, '":"').replace(/&/g, '","');
+    //query     = '{"' + query + '"}';
+    //query     = JSON.parse(query);
+    console.log(query);
+
+    $.ajax({
+        type   : 'POST',
+        url    : '/user/logins',
+        data   : query,
+        //contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            if (data == 'OK') {
+                $('.alert')
+                    .fadeOut('fast', function () {
+                        $('.alert').text('登陆成功！正在跳转...')
+                            .removeClass('alert-info')
+                            .removeClass('alert-danger')
+                            .addClass('alert-success');
+                    }).fadeIn(function () {
+                        setTimeout(function () {
+                            window.location = '/';
+                        }, 1000);
+                    });
+            } else {
+                $('.alert')
+                    .fadeOut('fast', function () {
+                        $('.alert').text('登陆失败！请输入正确的用户名密码...')
+                            .removeClass('alert-info')
+                            .addClass('alert-danger');
+                    }).fadeIn();
+            }
+        }
+    });
+
+    return false;
 });
 
 
