@@ -14,6 +14,8 @@ public class Util {
 
     public static String getUtf8String(String input) {
         String jvmCharset = System.getProperty("file.encoding");
+        logger.info("JVM编码信息: {}", jvmCharset);
+        System.out.println("JVM编码信息: " + jvmCharset);
         if (jvmCharset.equals("UTF-8")) {
             return input;
         } else {

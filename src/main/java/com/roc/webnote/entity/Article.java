@@ -20,7 +20,6 @@ public class Article {
     private String       tagListStr;
 
     public Article() {
-        new String("新的Markdown笔记...");
         this.title = Util.getUtf8String("新的Markdown笔记...");
 //        this.category = "";
 //        this.content = "";
