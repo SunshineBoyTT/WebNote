@@ -20,7 +20,7 @@ public class Article {
     private String       tagListStr;
 
     public Article() {
-        this.title = Util.getUtf8String("新的Markdown笔记...");
+        this.title = "新的Markdown笔记...";
 //        this.category = "";
 //        this.content = "";
         this.createTime = System.currentTimeMillis();

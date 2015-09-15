@@ -11,20 +11,4 @@ import java.io.UnsupportedEncodingException;
  */
 public class Util {
     private static final Logger logger = LoggerFactory.getLogger(Util.class);
-
-    public static String getUtf8String(String input) {
-        String jvmCharset = System.getProperty("file.encoding");
-        logger.info("JVM编码信息: {}", jvmCharset);
-        System.out.println("JVM编码信息: " + jvmCharset);
-        if (jvmCharset.equals("UTF-8")) {
-            return input;
-        } else {
-            try {
-                return new String(input.getBytes(jvmCharset), "UTF-8");
-            } catch (UnsupportedEncodingException e) {
-                logger.info("文本转码失败,源信息: {},失败信息: {}", e.getMessage());
-                return input;
-            }
-        }
-    }
 }
