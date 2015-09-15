@@ -19,7 +19,6 @@ public class HelloController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String printWelcome(@CookieValue(value = "userCode", required = false) String userCode) {
         logger.info("index");
-        System.out.println(userCode);
         if (StringUtils.isEmpty(userCode)) {
             return "index";
         } else {

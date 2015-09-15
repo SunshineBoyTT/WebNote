@@ -43,7 +43,7 @@ public class UserController {
     @RequestMapping(value = "/logins", method = RequestMethod.DELETE)
     @ResponseBody
     public String logout() {
-        // TODO 删除session信息,但是现在没有session信息
+        // TODO 删除session信息,但是现在没有session信息FGF
         return "OK";
     }
 }

@@ -28,7 +28,6 @@ public class PictureController {
     public String imgUpload(@RequestBody String body) throws IllegalStateException, IOException {
         body = URLDecoder.decode(body, "UTF-8").substring(27);
         logger.info("The request body is :{}", body);
-        System.out.println(body);
 
 
         UUID uuid = UUID.randomUUID();
