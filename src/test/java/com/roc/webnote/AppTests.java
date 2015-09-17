@@ -1,6 +1,7 @@
 package com.roc.webnote;
 
 import com.roc.webnote.controller.ArticleController;
+import com.roc.webnote.lib.Util;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -42,5 +43,10 @@ public class AppTests {
     public void testOS() {
         System.out.println(System.getProperty("os.name"));
         System.out.println(System.getProperty("file.encoding"));
+    }
+
+    @Test
+    public void testSendEmail() {
+        Util.sendEmail(null);
     }
 }
