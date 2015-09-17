@@ -1,0 +1,42 @@
+!!! 5
+html
+    head
+        title WebNote 2.0
+        // TODO SEO相关
+        link(rel='stylesheet', href='/resources/stylesheets/bootstrap.min.css')
+        //link(rel='stylesheet', href='/resources/stylesheets/style.css')
+        style.
+            .headroom--unpinned {
+                display: none;
+            }
+
+            .headroom--pinned {
+                display: block;
+            }
+
+
+    body(style="padding-top: 70px;")
+        include ../widget/index_header
+        block content
+
+        include ../widget/footer
+        script(src='/resources/javascripts/jquery.min.js')
+        script(src='/resources/javascripts/bootstrap.min.js')
+        script(src='/resources/javascripts/headroom.min.js')
+        // TODO 专有js
+        script.
+            $(function () {
+                var myElement = document.querySelector("header");
+                // 创建 Headroom 对象，将页面元素传递进去
+                var headroom = new Headroom(myElement, {
+                    "tolerance": 5,
+                    "offset"   : 205,
+                    "classes"  : {
+                        "initial" : "animated",
+                        "pinned"  : "slideDown",
+                        "unpinned": "slideUp"
+                    }
+                });
+                // 初始化
+                headroom.init();
+            });

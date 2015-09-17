@@ -1,0 +1,18 @@
+!!! 5
+html
+    head
+        title WebNote 2.0
+        link(rel='stylesheet', href='/resources/stylesheets/bootstrap.min.css')
+        link(rel='stylesheet', href='/resources/stylesheets/editormd.min.css')
+        link(rel='stylesheet', href='http://maxwells.github.io/assets/bootstrap-tags/css/bootstrap-tags.css')
+        link(rel='stylesheet', href='/resources/stylesheets/style.css')
+    body
+        block content
+
+        include ../widget/footer
+        script(src='/resources/javascripts/jquery.min.js')
+        script(src='/resources/javascripts/bootstrap.min.js')
+        script(src='/resources/javascripts/editormd.min.js')
+        script(src='http://maxwells.github.io/assets/bootstrap-tags/js/bootstrap-tags.js')
+        script(src='/resources/javascripts/page/all.js')
+        include ../widget/pagejs

@@ -1,0 +1,30 @@
+extends layout
+
+block content
+    header
+        h1 WebNote 2.0
+        div 登录
+    canvas#codeFlow
+    .container(style="margin-top: -300px;")
+        .row
+            .col-md-6.col-md-offset-3(style="min-height: 600px;")
+                .login-box
+                    div(style="height: 80px")
+                        .alert.alert-info
+                            strong
+                                span.glyphicon.glyphicon-info-sign
+                            | 请输入用户名密码登录。
+                    form.form-horizontal
+                        .form-group
+                            label.col-sm-3.control-label 用户名：
+                            .col-sm-9
+                                input.form-control(type="text",name="userName")
+                        .form-group
+                            label.col-sm-3.control-label 密码：
+                            .col-sm-9
+                                input.form-control(type="password",name="password")
+                        .form-group
+                            .col-sm-offset-5.col-sm-4
+                                button.btn.btn-default(type="submit")
+                                    span.glyphicon.glyphicon-log-in
+                                    |    登录
