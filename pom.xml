@@ -130,6 +130,13 @@
             <artifactId>markdownj-core</artifactId>
             <version>0.4</version>
         </dependency>
+
+        <dependency>
+            <groupId>net.gplatform</groupId>
+            <artifactId>Sdk4J</artifactId>
+            <version>2.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -141,9 +148,6 @@
                     <source>1.7</source>
                     <target>1.7</target>
                     <encoding>UTF-8</encoding>
-                    <compilerArguments>
-                        <extdirs>src/main/webapp/WEB-INF/lib</extdirs>
-                    </compilerArguments>
                 </configuration>
             </plugin>
             <plugin>
