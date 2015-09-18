@@ -1,6 +1,6 @@
 // 注销
 $('.logout').click(function () {
-    if (saveArticle) {
+    if (!(typeof saveArticle === 'undefined')) {
         saveArticle();
     }
     $.ajax({
