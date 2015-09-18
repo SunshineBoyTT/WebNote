@@ -75,6 +75,7 @@ public class UserController {
 
     @RequestMapping(value = "/social/qqlogin", method = RequestMethod.GET)
     public void handleSocailLogin(HttpServletRequest request, HttpServletResponse response) {
+        response.setContentType("text/html; charset=utf-8");
         PrintWriter out = null;
         try {
             out = response.getWriter();
