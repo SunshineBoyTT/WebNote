@@ -2,6 +2,7 @@ package com.roc.webnote.filter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -26,8 +27,19 @@ public class AuthenticationFilter extends OncePerRequestFilter {
         String uri = request.getRequestURI();
         if (!uri.startsWith("/resources/")) {
             logger.info("Test Filter,URI: {}", uri);
-            String userUuid = getValue("user", request.getCookies());
-            request.setAttribute("user", userUuid);
+            // TODO Cookie更新
+
+
+            String userCode = getValue("userCode", request.getCookies());
+            System.out.println("Test Filter,URI: " + uri + ":" + userCode);
+            if (!StringUtils.isEmpty(userCode)) {
+                Cookie cookie = new Cookie("userCode", userCode);
+                cookie.setMaxAge(30 * 60);
+                cookie.setPath("/");
+
+                response.addCookie(cookie);
+            }
+//            request.setAttribute("user", userCode);
         } else {
             // TODO 静态文件设置缓存
             response.setHeader("Cache-control", "public, max-age=72000");

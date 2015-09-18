@@ -1,2 +1,3 @@
-each val, index in jsList
-    script(src='/resources/javascripts/page/#{val}.js')
+if jsList
+    each val, index in jsList
+        script(src='/resources/javascripts/#{val}.js')

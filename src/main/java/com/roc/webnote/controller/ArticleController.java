@@ -58,6 +58,11 @@ public class ArticleController {
             return "redirect:/";
         } else {
             model.addAttribute("articles", articleDao.getArticles(userCode));
+            model.addAttribute("jsList", new String[]{
+                    "timeago/timeago",
+                    "timeago/locales/timeago.zh-cn",
+                    "page/articles"
+            });
             return "articles";
         }
     }
@@ -65,6 +70,9 @@ public class ArticleController {
     @RequestMapping(value = "/{articleCode}", method = RequestMethod.GET)
     public String editArticle(@PathVariable("articleCode") String articleCode, Model model) {
         model.addAttribute("article", articleDao.getArticle(articleCode));
+        model.addAttribute("jsList", new String[]{
+                "page/editor"
+        });
         return "article";
     }
 

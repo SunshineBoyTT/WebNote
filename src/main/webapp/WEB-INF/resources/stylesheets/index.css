@@ -1,0 +1,7 @@
+.hero {
+    background: url("http://cdn1.evernote.com/media/img/home/desktop/hero-new/bo-zh-cn-xl.jpg");
+    height: 600px;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+}

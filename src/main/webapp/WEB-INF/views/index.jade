@@ -1,6 +1,46 @@
 extends layout/index_layout
 
 block content
-    h1 dfasjk
-    h2 fdsjk
-    div(style="height: 800px") dfsa
+    .hero
+    .container
+        .row
+            .col-xs-12
+                .jumbotron(style="background-color: #FFF;")
+                    h1 只为了一个高大上的首页
+                    p 这是简介
+                    p 这是另一段简介
+                    p
+                        a.btn.btn-primary.btn-lg(href="#") 了解更多
+
+    // Modal
+    #loginModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel')
+        .modal-dialog(role='document')
+            .modal-content
+                .modal-header
+                    button.close(type='button', data-dismiss='modal', aria-label='Close')
+                        span(aria-hidden='true') &times;
+                    h4#myModalLabel.modal-title 登录
+                .modal-body
+                    .login-box
+                    div(style="height: 80px")
+                        .alert.alert-info
+                            strong
+                                span.glyphicon.glyphicon-info-sign
+                            | 请输入用户名密码登录。
+                    form.form-horizontal
+                        .form-group
+                            label.col-sm-3.control-label 用户名：
+                            .col-sm-9
+                                input.form-control(type="text",name="userName")
+                        .form-group
+                            label.col-sm-3.control-label 密码：
+                            .col-sm-9
+                                input.form-control(type="password",name="password")
+                        .form-group
+                            .col-sm-offset-5.col-sm-4
+                                button.btn.btn-default(type="submit")
+                                    span.glyphicon.glyphicon-log-in
+                                    |    登录
+                //.modal-footer
+                //    button.btn.btn-default(type='button', data-dismiss='modal') Close
+                //    button.btn.btn-primary(type='button') Save changes

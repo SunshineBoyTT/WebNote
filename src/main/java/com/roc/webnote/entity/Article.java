@@ -1,9 +1,12 @@
 package com.roc.webnote.entity;
 
 import com.roc.webnote.lib.Util;
+import org.markdownj.MarkdownProcessor;
 import org.springframework.util.StringUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -18,12 +21,16 @@ public class Article {
     private String       content;
     private Long         createTime;
     private String       tagListStr;
+    // View
+    private String       createTimeView;
+    private String       contentView;
 
     public Article() {
         this.title = "新的Markdown笔记...";
 //        this.category = "";
-//        this.content = "";
+        this.content = "";
         this.createTime = System.currentTimeMillis();
+        System.out.println("MyBatis 执行了实例化?");
     }
 
 
@@ -96,5 +103,22 @@ public class Article {
 
     public void setUserCode(String userCode) {
         this.userCode = userCode;
+    }
+
+    public String getCreateTimeView() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return dateFormat.format(this.createTime);
+    }
+
+    public void setCreateTimeView(String createTimeView) {
+        this.createTimeView = createTimeView;
+    }
+
+    public String getContentView() {
+        return new MarkdownProcessor().markdown(this.getContent());
+    }
+
+    public void setContentView(String contentView) {
+        this.contentView = contentView;
     }
 }

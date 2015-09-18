@@ -1,17 +1,22 @@
-extends layout
+extends layout/normal_layout
 block content
-    header
-        h1 WebNote 2.0
-        div 列表
-    .container
+    .container(style="padding-top: 70px")
         .row
             .col-xs-12
-                .list-group
-                each article, i in articles
-                    a.list-group-item(href="/article/#{article.code}")
-                        h4.list-group-item-heading #{article.title}
-                        p.list-group-item-text #{article.content}
-    .initArticle
-        a.btn.btn-info(href="#")
-            span.glyphicon.glyphicon-file
-            | 增加一个
+                .list-group.articles
+                    if articles.size() > 0
+                        each article, i in articles
+                            a.list-group-item(href="/article/#{article.code}")
+                                h4.list-group-item-heading #{article.title}
+                                if (article.content || "" != article.content || article.content == null)
+                                    .content
+                                        !{article.contentView}
+                                time.timeago(datetime="#{article.createTimeView}")
+                    else
+                        .createArticleInfo
+                            .alert.alert-info.alert-dismissible(role='alert')
+                                button.close(type='button', data-dismiss='alert', aria-label='Close')
+                                    span(aria-hidden='true') ×
+                                strong Hey!
+                                |  你还没有一篇文章,请创建一个吧...
+                            button.btn.btn-lg.btn-primary.initArticle 写文章

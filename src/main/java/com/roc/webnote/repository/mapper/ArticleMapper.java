@@ -11,7 +11,7 @@ import java.util.List;
  * Created by yp-tc-m-2795 on 15/9/13.
  */
 public interface ArticleMapper {
-    @Select("SELECT * FROM article WHERE userCode = #{userCode}")
+    @Select("SELECT * FROM article WHERE userCode = #{userCode} ORDER BY createTime DESC")
     List<Article> getArticles(String userCode);
 
     @Select("SELECT * FROM article WHERE code = #{articleCode}")

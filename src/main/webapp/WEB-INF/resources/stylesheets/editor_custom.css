@@ -1,0 +1,21 @@
+input.title, input.title:focus {
+    width: 75%;
+    color: #717171;
+    font-size: 20px;
+    border: none;
+    /*border-bottom: 1px solid #DEDEDE;*/
+    outline: none;
+    float: left;
+}
+
+.editormd-fullscreen {
+    z-index: 9999;
+}
+
+.article-handler > .btn {
+    margin-right: 10px;
+}
+
+.articleInfo {
+    float: right;
+}

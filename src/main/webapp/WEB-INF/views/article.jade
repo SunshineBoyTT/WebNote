@@ -1,44 +1,27 @@
-extends layout
+extends layout/editor_layout
 block content
-    nav.navbar.navbar-default.navbar-fixed-top
-        .container
-            .navbar-header
-                a.navbar-brand(href="/") WebNote 2.0
-            .collapse.navbar-collapse
-                ul.nav.navbar-nav.navbar-right
-                    li.dropdown
-                        a.dropdown-toggle(href="#", data-toggle="dropdown", role="button", aria-haspopup="true", aria-expanded="false")
-                            | 个人信息
-                            span.caret
-                        ul.dropdown-menu
-                            li
-                                a(href="#") 用户名:#{user.userName}
-                            li.divider(role="separator")
-                            li
-                                a(href="#").logout
-                                    span.glyphicon.glyphicon-log-out
-                                    | 注销
-    .container
+    .container-fluid
         .row
             .col-xs-12(style="padding-top: 55px;")
-                .header
-                    h1 书写, 第237话
-                .form-group
+                //.header
+                //    h1 书写, 第237话
+                //.form-group
                     label 标题
-                    input.form-control.title(placeholder="请输入标题...",value="#{article.title}",data-code="#{article.code}")
-                .form-group
-                    label 分类/目录
-                    select.form-control.category(style="height: 38px;")
-                        option 1
-                        option 2
-                        option 3
+                span.glyphicon.glyphicon-file(style="float: left; font-size: 22px; margin-top: 2px;")
+                input.title(placeholder="请输入标题...",value="#{article.title}",data-code="#{article.code}")
+                //.form-group
+                //    label 分类/目录
+                //    select.form-control.category(style="height: 38px;")
+                //        option 1
+                //        option 2
+                //        option 3
                 .editormd#my-editormd
                     textarea(style="display: none;") #{article.content}
                     //script(type="text/markdown")
-                .form-group
-                    label 标签
-                    #largeTags
-                .form-group
+                //.form-group
+                //    label 标签
+                //    #largeTags
+                .form-group.article-handler
                     button.btn.btn-info.btn-save
                         span.glyphicon.glyphicon-floppy-disk
                         | Save
@@ -48,6 +31,7 @@ block content
                     button.btn.btn-danger.btn-remove
                         span.glyphicon.glyphicon-trash
                         | Remove
+                    p.articleInfo
 
 
 
