@@ -128,7 +128,7 @@ public class UserController {
             logger.info("QQ login error: {}", e.getMessage());
         }
 
-        return "index";
+        return "redirect:/";
 
     }
 
