@@ -16,6 +16,12 @@ public class HelloController {
 
     private static final Logger logger = LoggerFactory.getLogger(HelloController.class);
 
+    /**
+     * Cookie 处理ß
+     *
+     * @param userCode
+     * @return
+     */
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String printWelcome(@CookieValue(value = "userCode", required = false) String userCode) {
         logger.info("index");
