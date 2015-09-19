@@ -1,5 +1,6 @@
 package com.roc.webnote.repository.impl;
 
+import com.roc.webnote.entity.SocialUser;
 import com.roc.webnote.entity.User;
 import com.roc.webnote.repository.BaseDao;
 import com.roc.webnote.repository.mapper.UserMapper;
@@ -21,10 +22,26 @@ public class UserDao extends BaseDao implements UserMapper {
     }
 
     @Override
-    public User getUserByUuid(String userUuid) {
+    public User getUserByCode(String userUuid) {
         try (SqlSession session = sessionFactory.openSession(true)) {
             UserMapper userMapper = session.getMapper(UserMapper.class);
-            return userMapper.getUserByUuid(userUuid);
+            return userMapper.getUserByCode(userUuid);
+        }
+    }
+
+    @Override
+    public User getUserBySocial(SocialUser socialUser) {
+        try (SqlSession session = sessionFactory.openSession(true)) {
+            UserMapper userMapper = session.getMapper(UserMapper.class);
+            return userMapper.getUserBySocial(socialUser);
+        }
+    }
+
+    @Override
+    public void insertUser(User user) {
+        try (SqlSession session = sessionFactory.openSession(true)) {
+            UserMapper userMapper = session.getMapper(UserMapper.class);
+            userMapper.insertUser(user);
         }
     }
 }

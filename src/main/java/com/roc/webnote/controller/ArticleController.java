@@ -53,7 +53,7 @@ public class ArticleController {
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String articleList(@CookieValue(value = "userCode", required = false) String userCode, Model model) {
+    public String articleList(@CookieValue(value = "userCode", required = false) String userCode, Model model, HttpServletRequest request) {
         if (StringUtils.isEmpty(userCode)) {
             return "redirect:/";
         } else {
@@ -63,16 +63,18 @@ public class ArticleController {
                     "timeago/locales/timeago.zh-cn",
                     "page/articles"
             });
+            model.addAttribute("user", request.getAttribute("user"));
             return "articles";
         }
     }
 
     @RequestMapping(value = "/{articleCode}", method = RequestMethod.GET)
-    public String editArticle(@PathVariable("articleCode") String articleCode, Model model) {
+    public String editArticle(@PathVariable("articleCode") String articleCode, HttpServletRequest request, Model model) {
         model.addAttribute("article", articleDao.getArticle(articleCode));
         model.addAttribute("jsList", new String[]{
                 "page/editor"
         });
+        model.addAttribute("user", request.getAttribute("user"));
         return "article";
     }
 

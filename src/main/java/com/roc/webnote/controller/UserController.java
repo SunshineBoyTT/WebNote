@@ -2,27 +2,28 @@ package com.roc.webnote.controller;
 
 import com.qq.connect.QQConnectException;
 import com.qq.connect.api.OpenID;
-import com.qq.connect.api.qzone.PageFans;
 import com.qq.connect.api.qzone.UserInfo;
 import com.qq.connect.javabeans.AccessToken;
-import com.qq.connect.javabeans.qzone.PageFansBean;
 import com.qq.connect.javabeans.qzone.UserInfoBean;
-import com.qq.connect.javabeans.weibo.Company;
 import com.qq.connect.oauth.Oauth;
+import com.roc.webnote.entity.SocialUser;
 import com.roc.webnote.entity.User;
+import com.roc.webnote.lib.Util;
+import com.roc.webnote.repository.mapper.SocialMapper;
 import com.roc.webnote.repository.mapper.UserMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * Created by yp-tc-m-2795 on 15/9/13.
@@ -33,7 +34,9 @@ public class UserController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
-    private UserMapper userDao;
+    private UserMapper   userDao;
+    @Autowired
+    private SocialMapper socialDao;
 
     @RequestMapping(value = "/logins", method = {RequestMethod.POST, RequestMethod.PUT})
     @ResponseBody
@@ -41,11 +44,7 @@ public class UserController {
         user = userDao.getUser(user);
         if (user != null) {
             // TODO Cookie & Session---查询到了登录的用户
-            Cookie cookie = new Cookie("userCode", user.getCode());
-            cookie.setMaxAge(30 * 60);
-            cookie.setPath("/");
-
-            response.addCookie(cookie);
+            Util.setCookie(response, user.getCode());
             return "OK";
         }
         return "ERROR";
@@ -80,20 +79,19 @@ public class UserController {
      * @param response
      */
     @RequestMapping(value = "/social/qqlogin", method = RequestMethod.GET)
-    public void handleSocailLogin(HttpServletRequest request, HttpServletResponse response) {
+    public String handleSocailLogin(HttpServletRequest request, HttpServletResponse response) {
         // TODO 获取OpenID
-        String openID = null;
+        String accessToken = null;
+        String openID      = null;
         try {
             AccessToken accessTokenObj = (new Oauth()).getAccessTokenByRequest(request);
-            String accessToken = null;
-//                    , openID = null;
             long tokenExpireIn = 0L;
 
 
             if (accessTokenObj.getAccessToken().equals("")) {
 //                我们的网站被CSRF攻击了或者用户取消了授权
 //                做一些数据统计工作
-                System.out.print("没有获取到响应参数");
+                logger.info("没有获取到响应参数");
             } else {
                 accessToken = accessTokenObj.getAccessToken();
                 tokenExpireIn = accessTokenObj.getExpireIn();
@@ -101,16 +99,39 @@ public class UserController {
                 request.getSession().setAttribute("demo_access_token", accessToken);
                 request.getSession().setAttribute("demo_token_expirein", String.valueOf(tokenExpireIn));
 
-                // 利用获取到的accessToken 去获取当前用的openid -------- start
+                // 利用获取到的accessToken 去获取当前用的openid --------
                 OpenID openIDObj = new OpenID(accessToken);
                 openID = openIDObj.getUserOpenID();
             }
+
+            SocialUser socialUser = new SocialUser();
+            socialUser.setOpenID(openID);
+            socialUser.setType("qq");
+            // TODO 根据OpenID获取用户,没有就创建一个
+            User user = userDao.getUserBySocial(socialUser);
+            if (null == user) {
+                // TODO 初始化用户,创建社会化账户,设置Cookie
+                UserInfo qzoneUserInfo = new UserInfo(accessToken, openID);
+                UserInfoBean userInfoBean = qzoneUserInfo.getUserInfo();
+                user = new User();
+                user.setCode(UUID.randomUUID().toString());
+                user.setUserName(userInfoBean.getNickname());// TODO 关联社会化账户信息
+                user.setAvatar(userInfoBean.getAvatar().getAvatarURL100());
+                userDao.insertUser(user);
+
+                socialUser.setUserCode(user.getCode());
+                socialDao.insertSocialUser(socialUser);
+
+            }
+            Util.setCookie(response, user.getCode());
         } catch (QQConnectException e) {
             logger.info("QQ login error: {}", e.getMessage());
         }
 
-        // TODO 根据OpenID获取用户,没有就创建一个
+        return "index";
 
     }
+
+
 }
 

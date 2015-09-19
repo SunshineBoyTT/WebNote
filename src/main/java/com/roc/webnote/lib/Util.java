@@ -8,6 +8,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mail.SimpleMailMessage;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * 字符编码
  * Created by yp-tc-m-2795 on 15/9/15.
@@ -32,5 +35,13 @@ public class Util {
             e.printStackTrace();
         }
 
+    }
+
+    public static void setCookie(HttpServletResponse response, String userCode) {
+        Cookie cookie = new Cookie("userCode", userCode);
+        cookie.setMaxAge(30 * 60);
+        cookie.setPath("/");
+
+        response.addCookie(cookie);
     }
 }
