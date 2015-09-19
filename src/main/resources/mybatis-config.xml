@@ -26,5 +26,6 @@
     <mappers>
         <mapper class="com.roc.webnote.repository.mapper.UserMapper"/>
         <mapper class="com.roc.webnote.repository.mapper.ArticleMapper"/>
+        <mapper class="com.roc.webnote.repository.mapper.SocialMapper"/>
     </mappers>
 </configuration>
