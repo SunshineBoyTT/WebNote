@@ -109,27 +109,19 @@ public class UserController {
             socialUser.setType("qq");
             // TODO 根据OpenID获取用户,没有就创建一个
             User user = userDao.getUserBySocial(socialUser);
-            String avatar = null;
-            // TODO 初始化用户,创建社会化账户,设置Cookie
-            UserInfo qzoneUserInfo = new UserInfo(accessToken, openID);
-            UserInfoBean userInfoBean = qzoneUserInfo.getUserInfo();
-            avatar = userInfoBean.getAvatar().getAvatarURL100();
             if (null == user) {
+                // TODO 初始化用户,创建社会化账户,设置Cookie
+                UserInfo qzoneUserInfo = new UserInfo(accessToken, openID);
+                UserInfoBean userInfoBean = qzoneUserInfo.getUserInfo();
                 user = new User();
                 user.setCode(UUID.randomUUID().toString());
                 user.setUserName(userInfoBean.getNickname());// TODO 关联社会化账户信息
-
-                user.setAvatar(avatar);
+                user.setAvatar(userInfoBean.getAvatar().getAvatarURL100());
                 userDao.insertUser(user);
 
                 socialUser.setUserCode(user.getCode());
                 socialDao.insertSocialUser(socialUser);
 
-            } else {
-                // TODO update User avatar
-                user = userDao.getUserByCode(user.getCode());
-                user.setAvatar(avatar);
-                userDao.updateUser(user);
             }
             Util.setCookie(response, user.getCode());
         } catch (QQConnectException e) {
