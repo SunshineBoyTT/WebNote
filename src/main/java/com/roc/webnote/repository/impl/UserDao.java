@@ -44,4 +44,12 @@ public class UserDao extends BaseDao implements UserMapper {
             userMapper.insertUser(user);
         }
     }
+
+    @Override
+    public void updateUser(User user) {
+        try (SqlSession session = sessionFactory.openSession(true)) {
+            UserMapper userMapper = session.getMapper(UserMapper.class);
+            userMapper.updateUser(user);
+        }
+    }
 }
