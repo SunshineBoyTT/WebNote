@@ -32,11 +32,18 @@ public class Util {
             email.addTo("745656593@qq.com");
             email.send();
         } catch (EmailException e) {
-            e.printStackTrace();
+            logger.info("发送失败: {} --- From {} to {}.", email.getSubject(), email.getFromAddress(), email.getToAddresses());
+            logger.info("失败信息: {}", e.getMessage());
         }
 
     }
 
+    /**
+     * Controller 层使用
+     *
+     * @param response
+     * @param userCode
+     */
     public static void setCookie(HttpServletResponse response, String userCode) {
         Cookie cookie = new Cookie("userCode", userCode);
         cookie.setMaxAge(30 * 60);

@@ -18,6 +18,10 @@
                 <property name="url" value="${url}"/>
                 <property name="username" value="${username}"/>
                 <property name="password" value="${password}"/>
+                <property name="poolPingEnabled" value="true"/>
+                <property name="poolPingQuery" value="select 1"/>
+                <!-- 等待时间 1小时: 3600000 = 1*60*60*1000ms-->
+                <property name="poolPingConnectionsNotUsedFor" value="3600000"/>
             </dataSource>
         </environment>
     </environments>
