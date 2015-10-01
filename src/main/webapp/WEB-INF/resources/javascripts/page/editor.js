@@ -10,13 +10,13 @@ $(function () {
         toolbarIcons      : function () {
             // Or return editormd.toolbarModes[name]; // full, simple, mini
             // Using "||" set icons align right.
-            return ["undo", "redo", "|", "bold", "hr", "|", "info", "||", "watch", "fullscreen", "preview"]
+            return ["undo", "redo", "|", "bold", "hr", "moreTag", "|", "info", "||", "watch", "fullscreen", "preview"]
         },
         toolbarIconsClass : {
             testIcon: "fa-gears"  // 指定一个FontAawsome的图标类
         },
-        toolbarIconTexts  : {
-            testIcon2: "测试按钮"  // 如果没有图标，则可以这样直接插入内容，可以是字符串或HTML标签
+        toolbarIconsClass : {
+            moreTag: "fa fa-magic"  // 如果没有图标，则可以这样直接插入内容，可以是字符串或HTML标签
         },
         // 用于增加自定义工具栏的功能，可以直接插入HTML标签，不使用默认的元素创建图标
         toolbarCustomIcons: {
@@ -31,7 +31,7 @@ $(function () {
              * @param {Object}      cursor     CodeMirror的光标对象，可获取光标所在行和位置
              * @param {String}      selection  编辑器选中的文本
              */
-            testIcon : function (cm, icon, cursor, selection) {
+            testIcon: function (cm, icon, cursor, selection) {
                 //var cursor    = cm.getCursor();     //获取当前光标对象，同cursor参数
                 //var selection = cm.getSelection();  //获取当前选中的文本，同selection参数
                 // 替换选中文本，如果没有选中文本，则直接插入
@@ -44,24 +44,28 @@ $(function () {
                 console.log("testIcon =>", this, cm, icon, cursor, selection);
             }
             ,
-            testIcon2: function (cm, icon, cursor, selection) {
-                cm.replaceSelection("[" + selection + ":testIcon2](" + icon.html() + ")");
+            moreTag : function (cm, icon, cursor, selection) {
+                cm.replaceSelection('\n<!--more-->\n\n');
                 console.log("testIcon2 =>", this, icon.html());
             }
         }
         ,
         lang              : {
             toolbar: {
-                file     : "上传文件",
-                testIcon : "自定义按钮testIcon",  // 自定义按钮的提示文本，即title属性
-                testIcon2: "自定义按钮testIcon2",
-                undo     : "撤销 (Ctrl+Z)"
+                file    : "上传文件",
+                testIcon: "自定义按钮testIcon",  // 自定义按钮的提示文本，即title属性
+                moreTag : "更多标签...",
+                undo    : "撤销 (Ctrl+Z)"
             }
         }
         ,
         onload            : function () {
             this.fullscreen();
+        },
+        onchange          : function () {
+            saveArticle();
         }
+
     });
 
 
@@ -107,11 +111,20 @@ $(function () {
 // 屏蔽Ctrl+S, And 保存
 document.onkeydown = function (event) {
     console.log(window.event.keyCode);
-    if ((window.event.keyCode == 91) && (window.event.keyCode == 83)) {
-        event.returnValue = false;
-        saveArticle();
-        return false;
+    //if ((window.event.keyCode == 17) && (window.event.keyCode == 83)) {
+    //    event.returnValue = false;
+    //    saveArticle();
+    //    return false;
+    //}
+
+    if (window.event.ctrlKey == 1) {
+        if (window.event.keyCode == 83) {
+            event.returnValue = false;
+            saveArticle();
+            return false;
+        }
     }
+
 };
 
 
@@ -184,6 +197,11 @@ $(function () {
         saveArticle();
     });
 });
+
+// 初始化tooltip
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+})
 
 
 
