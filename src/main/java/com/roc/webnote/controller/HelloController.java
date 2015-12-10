@@ -31,5 +31,12 @@ public class HelloController {
             return "redirect:/article/list";
         }
     }
+    
+    @RequestMapping(value = "*", method = RequestMethod.GET)
+    @ResponseBody
+    public String autoResponse() {
+        logger.info("autoResponse");
+        return "<h1>Why are you come here? Haha~</h1>";
+    }
 
 }
