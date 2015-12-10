@@ -26,11 +26,4 @@ public class HelloController {
         }
     }
 
-
-    // TODO should be removed
-    @RequestMapping(value = "editor", method = RequestMethod.GET)
-    public String editorRouter() {
-        return "editor";
-    }
-
 }
