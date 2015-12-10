@@ -5,3 +5,12 @@
     background-size: cover;
     background-position: center;
 }
+
+.qq-avatar {
+    background-image: url("http://img-storage.qiniudn.com/15-9-20/52690737.jpg");
+    width: 20px;
+    height: 22px;
+    background-size: cover;
+    background-position: center;
+    float: left;
+}

@@ -22,7 +22,7 @@ block content
                 //    label 标签
                 //    #largeTags
                 .form-group.article-handler
-                    button.btn.btn-info.btn-save
+                    button.btn.btn-info.btn-save(data-toggle="tooltip",data-placement="top",title="Ctrl+S")
                         span.glyphicon.glyphicon-floppy-disk
                         | Save
                     a.btn.btn-success.btn-download(href="/article/download/#{article.code}",target="_blank")
