@@ -7,11 +7,12 @@ block content
                     if articles.size() > 0
                         each article, i in articles
                             a.list-group-item(href="/article/#{article.code}")
-                                h4.list-group-item-heading #{article.title}
-                                if (article.content || "" != article.content || article.content == null)
-                                    .content
-                                        !{article.contentView}
-                                time.timeago(datetime="#{article.createTimeView}")
+                                div
+                                    h4.list-group-item-heading #{article.title}
+                                    if (article.content || "" != article.content || article.content == null)
+                                        .content
+                                            !{article.contentView}
+                                    time.timeago(datetime="#{article.createTimeView}")
                     else
                         .createArticleInfo
                             .alert.alert-info.alert-dismissible(role='alert')
