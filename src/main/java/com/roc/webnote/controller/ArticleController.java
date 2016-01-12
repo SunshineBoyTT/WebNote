@@ -58,7 +58,7 @@ public class ArticleController {
         } else {
             model.addAttribute("articles", articleDao.getArticles(userCode));
             model.addAttribute("jsList", new String[]{
-                    "editor_lib/codemirror/marked.min",
+                    "editor_lib/marked.min",
                     "timeago/timeago",
                     "timeago/locales/timeago.zh-cn",
                     "page/articles"
