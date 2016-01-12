@@ -21,7 +21,7 @@ import java.util.UUID;
 @RequestMapping("/picture")
 public class PictureController {
     private static final String imgFolder = "images/";
-    private static       Logger logger    = LoggerFactory.getLogger(PictureController.class);
+    private static final      Logger logger    = LoggerFactory.getLogger(PictureController.class);
 
     @RequestMapping(value = "", method = RequestMethod.POST)
     @ResponseBody

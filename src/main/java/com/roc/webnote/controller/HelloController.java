@@ -8,6 +8,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/")
@@ -31,12 +32,12 @@ public class HelloController {
             return "redirect:/article/list";
         }
     }
-
-
-    // TODO should be removed
-    @RequestMapping(value = "editor", method = RequestMethod.GET)
-    public String editorRouter() {
-        return "editor";
+    
+    @RequestMapping(value = "*", method = RequestMethod.GET)
+    @ResponseBody
+    public String autoResponse() {
+        logger.info("autoResponse");
+        return "<h1>Why are you come here? Haha~</h1>";
     }
 
 }

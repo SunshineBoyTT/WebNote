@@ -23,7 +23,7 @@ import java.util.UUID;
 @RequestMapping("/article")
 @Controller
 public class ArticleController {
-    private Logger logger = LoggerFactory.getLogger(ArticleController.class);
+    private static final Logger logger = LoggerFactory.getLogger(ArticleController.class);
     @Autowired
     private UserMapper    userDao;
     @Autowired
