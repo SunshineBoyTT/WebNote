@@ -6,9 +6,9 @@ var initArticles = function() {
         //this;      //this指向当前元素
         //i;         //i表示Array当前下标
         //contentNode;     //value表示Array当前元素
-        var src = contentNode.html();
+        var src = contentNode.innerHTML;
         var target = marked(src);
-        contentNode.html(target);
+        contentNode.innerHTML = target;
     });
 };
 
