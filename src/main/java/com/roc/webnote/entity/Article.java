@@ -1,12 +1,10 @@
 package com.roc.webnote.entity;
 
-import com.roc.webnote.lib.Util;
 import org.markdownj.MarkdownProcessor;
 import org.springframework.util.StringUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
