@@ -12,6 +12,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.concurrent.RunnableFuture;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
@@ -24,7 +26,7 @@ public class AppTests {
     private MockMvc mockMvc;
 
     //    @SuppressWarnings("SpringJavaAutowiringInspection")
-//    @Autowired
+    //    @Autowired
     protected WebApplicationContext wac;
 
     //    @Before
@@ -34,15 +36,33 @@ public class AppTests {
 
     @Test
     public void simple() throws Exception {
-        mockMvc.perform(get("/"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("hello"));
+        mockMvc.perform(get("/")).andExpect(status().isOk()).andExpect(view().name("hello"));
     }
 
     @Test
     public void testOS() {
         System.out.println(System.getProperty("os.name"));
         System.out.println(System.getProperty("file.encoding"));
+        class Tes {
+            Integer a;
+
+            Tes(Integer i) {
+                a = i;
+            }
+
+            public String toString() {
+                return a + "";
+            }
+        }
+        Tes a = new Tes(3333);
+        Tes b = a;
+        System.out.println(a + "" + b);
+        b = new Tes(44444);
+        System.out.println(a + "" + b);
+    }
+
+    private void testException() throws Exception {
+        throw new NullPointerException("NullPointer--Roc");
     }
 
     @Test

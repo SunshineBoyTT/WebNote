@@ -17,7 +17,7 @@ public class HelloController {
     private static final Logger logger = LoggerFactory.getLogger(HelloController.class);
 
     /**
-     * Cookie 处理ß
+     * Cookie 处理
      *
      * @param userCode
      * @return

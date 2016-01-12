@@ -5,9 +5,9 @@ package com.roc.webnote.entity;
  */
 public class SocialUser {
     private Integer id;
-    private String  type;
-    private String  openID;
-    private String  userCode;
+    private String type;
+    private String openID;
+    private String userCode;
 
     public Integer getId() {
         return id;
