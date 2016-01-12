@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.FileInputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -59,6 +58,7 @@ public class ArticleController {
         } else {
             model.addAttribute("articles", articleDao.getArticles(userCode));
             model.addAttribute("jsList", new String[]{
+                    "editor_lib/codemirror/marked.min",
                     "timeago/timeago",
                     "timeago/locales/timeago.zh-cn",
                     "page/articles"
