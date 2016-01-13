@@ -24,7 +24,7 @@ import java.util.UUID;
 public class ArticleController {
     private static final Logger logger = LoggerFactory.getLogger(ArticleController.class);
     @Autowired
-    private UserMapper    userDao;
+    private UserMapper userDao;
     @Autowired
     private ArticleMapper articleDao;
 
@@ -81,9 +81,13 @@ public class ArticleController {
     @RequestMapping(value = "/{articleCode}", method = RequestMethod.POST)
     @ResponseBody
     public String updateArticle(@PathVariable("articleCode") String articleCode, @ModelAttribute Article article) {
-        article.setCode(articleCode);
-        articleDao.updateArticle(article);
-        return "OK";
+        if (StringUtils.isEmpty(article.getContent())) {
+            return "ERROR!";
+        } else {
+            article.setCode(articleCode);
+            articleDao.updateArticle(article);
+            return "OK";
+        }
     }
 
     /**
@@ -94,10 +98,10 @@ public class ArticleController {
      */
     @RequestMapping(value = "/download/{articleCode}", method = RequestMethod.GET)
     public void downloadArticle(@PathVariable("articleCode") String articleCode, HttpServletResponse response) {
-        Article       article    = articleDao.getArticle(articleCode);
-        String        categories = "categories: 知识记录";
-        String        createTime = "date: " + getFormatDateTime(article.getCreateTime(), "yyyy-MM-dd HH:mm:ss");
-        StringBuilder builder    = new StringBuilder();
+        Article article = articleDao.getArticle(articleCode);
+        String categories = "categories: 知识记录";
+        String createTime = "date: " + getFormatDateTime(article.getCreateTime(), "yyyy-MM-dd HH:mm:ss");
+        StringBuilder builder = new StringBuilder();
         builder.append("title: " + article.getTitle() + "\n");
         builder.append(createTime + "\n");
         builder.append(categories + "\n");
@@ -112,7 +116,7 @@ public class ArticleController {
     }
 
     private static String getFormatDateTime(Long timestamp, String formatter) {
-        Date             date   = new Date(timestamp);
+        Date date = new Date(timestamp);
         SimpleDateFormat format = new SimpleDateFormat(formatter);
         return format.format(date);
     }

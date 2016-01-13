@@ -23,4 +23,7 @@ public interface ArticleMapper {
     @Update("UPDATE article SET title = #{title}, category = #{category}, content = #{content} WHERE code = #{code}")
     void updateArticle(Article article);
 
+    @Select("SELECT * FROM article WHERE code = #{articleCode} AND userCode = #{userCode}")
+    Article getArticle(String userCode, String articleCode);
+
 }

@@ -1,13 +1,14 @@
 package com.roc.webnote.filter;
 
+import com.roc.webnote.entity.Article;
 import com.roc.webnote.entity.User;
 import com.roc.webnote.lib.Util;
+import com.roc.webnote.repository.impl.ArticleDao;
 import com.roc.webnote.repository.impl.UserDao;
+import com.roc.webnote.repository.mapper.ArticleMapper;
 import com.roc.webnote.repository.mapper.UserMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -18,47 +19,67 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.io.PrintWriter;
+import java.util.*;
 
 /**
  * Created by yp-tc-m-2795 on 15/9/11.
  */
 public class AuthenticationFilter extends OncePerRequestFilter {
 
-    private static final Logger     logger  = LoggerFactory.getLogger(AuthenticationFilter.class);
-    private              UserMapper userDao = new UserDao();
+    private static final Logger logger = LoggerFactory.getLogger(AuthenticationFilter.class);
+    private UserMapper userDao = new UserDao();
+
+    private ArticleMapper articleDao = new ArticleDao();
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         // TODO 根据 URL 和 Cookie 判断请求是否合法
         // TODO 第一期只控制登录状态:未登录跳转到登录
         // TODO 在这里操作可以统一的控制权限,谁可以不可以进行想要的操作/请求
-        String                  uri            = request.getRequestURI();
+        String uri = request.getRequestURI();
         ParameterRequestWrapper requestWrapper = new ParameterRequestWrapper(request);
-        if (!uri.startsWith("/resources")) {
-            logger.info("Test Filter,URI: {}", uri);
-
-
-            String userCode = getValue("userCode", request.getCookies());
-            System.out.println("Test Filter,URI: " + uri + ":" + userCode);
-
-            // Cookie更新
-            if (!StringUtils.isEmpty(userCode)) {
-                Util.setCookie(response, userCode);
-                User user = userDao.getUserByCode(userCode);
-                request.setAttribute("user", user);
-
-                requestWrapper.setAttribute("user", user);
-            }
-
-        } else {
+        if (uri.startsWith("/resources")) {
             // TODO 静态文件设置缓存
             response.setHeader("Cache-control", "public, max-age=72000");
+        } else {
+            logger.info("Filter,URI: {}", uri);
+
+            String userCode = getValue("userCode", request.getCookies());
+            logger.info("Filter,URI: " + uri + ":" + userCode);
+
+            // filter logic
+            boolean authenticated = isUserConnectToArticle(userCode, uri);
+            if (!isUserConnectToArticle(userCode,uri)){
+                PrintWriter writer = response.getWriter();
+                writer.append("FXXK YOU!");
+                writer.flush();
+                writer.close();
+            }
+
+            // the last step: Cookie更新
+            updateCookie(userCode, response, request, requestWrapper);
         }
         filterChain.doFilter(requestWrapper, response);
+    }
+
+    private boolean isUserConnectToArticle(String userCode, String uri) {
+        // 查询文章是不是该用户可以查看
+        String articleCode = uri.substring(9);
+        Article article = articleDao.getArticle(userCode, articleCode);
+        return article != null && !StringUtils.isEmpty(article.getCode());
+    }
+
+
+    private void updateCookie(String userCode, HttpServletResponse response, HttpServletRequest request,
+                              ParameterRequestWrapper requestWrapper) {
+        if (!StringUtils.isEmpty(userCode)) {
+            Util.setCookie(response, userCode);
+            User user = userDao.getUserByCode(userCode);
+            request.setAttribute("user", user);
+
+            requestWrapper.setAttribute("user", user);
+        }
     }
 
 
@@ -77,7 +98,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
                 }
             }
         }
-        return null;
+        return "";
     }
 
     public class ParameterRequestWrapper extends HttpServletRequestWrapper {
@@ -100,8 +121,8 @@ public class AuthenticationFilter extends OncePerRequestFilter {
         }
 
         public void modifyParameterValues() {//将parameter的值去除空格后重写回去
-            Set<String>      set = params.keySet();
-            Iterator<String> it  = set.iterator();
+            Set<String> set = params.keySet();
+            Iterator<String> it = set.iterator();
             while (it.hasNext()) {
                 String key = (String) it.next();
                 String[] values = params.get(key);

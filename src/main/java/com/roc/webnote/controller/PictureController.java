@@ -21,7 +21,7 @@ import java.util.UUID;
 @RequestMapping("/picture")
 public class PictureController {
     private static final String imgFolder = "images/";
-    private static final      Logger logger    = LoggerFactory.getLogger(PictureController.class);
+    private static final Logger logger = LoggerFactory.getLogger(PictureController.class);
 
     @RequestMapping(value = "", method = RequestMethod.POST)
     @ResponseBody
@@ -32,9 +32,9 @@ public class PictureController {
 
         UUID uuid = UUID.randomUUID();
 
-        BASE64Decoder decoder      = new BASE64Decoder();
-        String        fileName     = imgFolder + uuid + ".png";
-        byte[]        decoderBytes = decoder.decodeBuffer(body);
+        BASE64Decoder decoder = new BASE64Decoder();
+        String fileName = imgFolder + uuid + ".png";
+        byte[] decoderBytes = decoder.decodeBuffer(body);
         QiNiuTools.upload(decoderBytes, fileName);
 
         return uuid.toString();

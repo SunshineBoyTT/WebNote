@@ -3,7 +3,6 @@ package com.roc.webnote.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,7 +31,7 @@ public class HelloController {
             return "redirect:/article/list";
         }
     }
-    
+
     @RequestMapping(value = "*", method = RequestMethod.GET)
     @ResponseBody
     public String autoResponse() {

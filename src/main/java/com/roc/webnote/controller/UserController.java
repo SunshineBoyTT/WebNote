@@ -33,7 +33,7 @@ public class UserController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
-    private UserMapper   userDao;
+    private UserMapper userDao;
     @Autowired
     private SocialMapper socialDao;
 
@@ -81,7 +81,7 @@ public class UserController {
     public String handleSocailLogin(HttpServletRequest request, HttpServletResponse response) {
         // TODO 获取OpenID
         String accessToken = null;
-        String openID      = null;
+        String openID = null;
         try {
             AccessToken accessTokenObj = (new Oauth()).getAccessTokenByRequest(request);
             long tokenExpireIn = 0L;

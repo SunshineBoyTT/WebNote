@@ -45,4 +45,12 @@ public class ArticleDao extends BaseDao implements ArticleMapper {
             articleMapper.updateArticle(article);
         }
     }
+
+    @Override
+    public Article getArticle(String userCode, String articleCode) {
+        try (SqlSession session = sessionFactory.openSession(true)) {
+            ArticleMapper articleMapper = session.getMapper(ArticleMapper.class);
+            return articleMapper.getArticle(userCode, articleCode);
+        }
+    }
 }
